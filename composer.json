@@ -1,0 +1,33 @@
+{
+    "name": "aurora/http-transaction",
+    "description": "Http handle interfaces",
+    "type": "library",
+    "require": {
+        "php": ">=7.0",
+        "psr/http-message": "~1.0",
+        "panlatent/context": "~1.0",
+        "aurora/http-foundation": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5",
+        "php-coveralls/php-coveralls": "^2.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "panlatent",
+            "email": "panlatent@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Aurora\\Http\\Handle\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
