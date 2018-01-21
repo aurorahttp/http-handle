@@ -1,5 +1,5 @@
 {
-    "name": "aurora/http-transaction",
+    "name": "aurora/http-handle",
     "description": "Http handle interfaces",
     "type": "library",
     "require": {
