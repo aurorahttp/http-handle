@@ -14,10 +14,10 @@ use SplDoublyLinkedList;
  *
  * @author Panlatent <panlatent@gmail.com>
  */
-class HandlerList implements Iterator, Countable, ArrayAccess, Serializable
+class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, HandlerInterface
 {
     /**
-     * @var SplDoublyLinkedList
+     * @var HandlerInterface[]|SplDoublyLinkedList
      */
     protected $store;
 
@@ -27,6 +27,26 @@ class HandlerList implements Iterator, Countable, ArrayAccess, Serializable
     public function __construct()
     {
         $this->store = new SplDoublyLinkedList();
+    }
+
+    /**
+     * Process a request using all stored handlers.
+     *
+     * @param mixed $request
+     * @return mixed
+     */
+    public function handle($request)
+    {
+        foreach ($this->store as $handler) {
+            $result = $handler->handle($request);
+            if ($request === false) {
+                break;
+            } elseif ($request !== null) {
+                $request = $result;
+            }
+        }
+
+        return $request;
     }
 
     /**
@@ -123,9 +143,9 @@ class HandlerList implements Iterator, Countable, ArrayAccess, Serializable
     }
 
     /**
-     * @param HandlerList $handlerList
+     * @param HandlerBundle $handlerList
      */
-    public function merge(HandlerList $handlerList)
+    public function merge(HandlerBundle $handlerList)
     {
         foreach ($handlerList as $handler) {
             $this->store->push($handler);
