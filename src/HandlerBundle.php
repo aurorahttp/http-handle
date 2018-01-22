@@ -50,7 +50,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     }
 
     /**
-     * @param mixed            $index
+     * @param int              $index
      * @param HandlerInterface $handler
      */
     public function insert($index, HandlerInterface $handler)
@@ -95,7 +95,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
      */
     public function front()
     {
-        return $this->store->top();
+        return $this->store->bottom();
     }
 
     /**
@@ -103,7 +103,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
      */
     public function back()
     {
-        return $this->store->bottom();
+        return $this->store->top();
     }
 
     /**
@@ -127,7 +127,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
      */
     public function clear()
     {
-        for (; ! $this->store->isEmpty(); ) {
+        for (; ! $this->store->isEmpty();) {
             $this->store->pop();
         }
     }
@@ -153,7 +153,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     }
 
     /**
-     * @param mixed $index
+     * @param int $index
      * @return bool
      */
     public function offsetExists($index)
@@ -162,7 +162,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     }
 
     /**
-     * @param mixed $index
+     * @param int $index
      * @return HandlerInterface
      */
     public function offsetGet($index)
@@ -171,7 +171,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     }
 
     /**
-     * @param mixed            $index
+     * @param int              $index
      * @param HandlerInterface $handler
      */
     public function offsetSet($index, $handler)
@@ -185,7 +185,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     }
 
     /**
-     * @param mixed $index
+     * @param int $index
      */
     public function offsetUnset($index)
     {
@@ -209,7 +209,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function key()
     {
