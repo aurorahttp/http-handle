@@ -9,26 +9,26 @@ trait ReplaceableTrait
     /**
      * @var callable
      */
-    protected $handle;
+    protected $handler;
 
     /**
      * Replace class handle method.
      *
-     * @param callable $handle
+     * @param callable $handler
      * @param bool     $bindTo
      */
-    public function replace($handle, $bindTo = true)
+    public function replace($handler, $bindTo = true)
     {
-        if ($bindTo && $handle instanceof Closure) {
-            $handle = $handle->bindTo($this, $this);
+        if ($bindTo && $handler instanceof Closure) {
+            $handler = $handler->bindTo($this, $this);
         }
-        $this->handle = $handle;
+        $this->handler = $handler;
     }
 
     public function handle()
     {
-        if ($this->handle !== null) {
-            call_user_func($this->handle);
+        if ($this->handler !== null) {
+            call_user_func($this->handler);
         }
     }
 }
