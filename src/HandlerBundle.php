@@ -32,21 +32,25 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     /**
      * Process a request using all stored handlers.
      *
-     * @param mixed $request
+     * @param mixed            $request
+     * @param HandlerInterface $next
      * @return mixed
      */
-    public function handle($request)
+    public function handle($request, HandlerInterface $next)
     {
-        foreach ($this->store as $handler) {
-            $result = $handler->handle($request);
-            if ($request === false) {
-                break;
-            } elseif ($request !== null) {
-                $request = $result;
-            }
+        if ($this->isEmpty()) {
+            return $request;
         }
+        if ($this->store->getIteratorMode() != (SplDoublyLinkedList::IT_MODE_FIFO |
+            SplDoublyLinkedList::IT_MODE_DELETE)) {
+            $bundle = clone $this;
+            $bundle->store->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_DELETE);
+            return $next->handle($request, $bundle);
+        }
+        $bundle = $this;
+        $handler = $this->frontPop();
 
-        return $request;
+        return $handler->handle($request, $bundle);
     }
 
     /**
@@ -61,7 +65,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     /**
      * @return HandlerInterface
      */
-    public function pop()
+    public function backPop()
     {
         return $this->store->pop();
     }
@@ -69,7 +73,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     /**
      * @return HandlerInterface
      */
-    public function popFront()
+    public function frontPop()
     {
         return $this->store->shift();
     }
@@ -77,7 +81,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     /**
      * @param HandlerInterface $value
      */
-    public function push(HandlerInterface $value)
+    public function backPush(HandlerInterface $value)
     {
         $this->store->push($value);
     }
@@ -85,7 +89,7 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     /**
      * @param HandlerInterface $value
      */
-    public function pushFront(HandlerInterface $value)
+    public function frontPush(HandlerInterface $value)
     {
         $this->store->unshift($value);
     }
@@ -129,6 +133,17 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     {
         for (; ! $this->store->isEmpty();) {
             $this->store->pop();
+        }
+    }
+
+    /**
+     * Reverse handlers.
+     */
+    public function reverse()
+    {
+        $length = count($this->store);
+        for ($i = 0; $i < $length; ++$i) {
+            $this->store->unshift($this->store->pop());
         }
     }
 

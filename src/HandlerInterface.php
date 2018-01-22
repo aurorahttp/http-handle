@@ -4,5 +4,10 @@ namespace Aurora\Http\Handle;
 
 interface HandlerInterface
 {
-    public function handle($request);
+    /**
+     * @param mixed            $request
+     * @param HandlerInterface $next
+     * @return mixed
+     */
+    public function handle($request, HandlerInterface $next);
 }

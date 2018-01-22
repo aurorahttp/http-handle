@@ -12,11 +12,10 @@ class Handler implements \Aurora\Http\Handle\HandlerInterface
         $this->number = $number;
     }
 
-    public function handle($request)
+    public function handle($request, \Aurora\Http\Handle\HandlerInterface $handler)
     {
-        return $request + 1;
+        return $handler->handle($request . $this->number, $handler);
     }
-
 }
 
 class HandlerBundleTest extends TestCase
@@ -33,7 +32,7 @@ class HandlerBundleTest extends TestCase
         $this->assertSame($o, $bundle->front());
         $this->assertSame($q, $bundle->back());
 
-        $bundle->pop();
+        $bundle->backPop();
         $this->assertSame($p, $bundle->back());
 
         $bundle->clear();
@@ -75,7 +74,7 @@ class HandlerBundleTest extends TestCase
     {
         $bundle = new HandlerBundle();
         $this->insertBundle($bundle, 3);
-        $this->assertEquals(4, $bundle->handle(1));
+        $this->assertEquals('x.012', $bundle->handle('x', new Handler('.')));
     }
 
     protected function insertBundle(HandlerBundle $bundle, $count)
