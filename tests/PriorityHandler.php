@@ -2,7 +2,10 @@
 
 namespace Aurora\Http\Handler\Tests;
 
-class PriorityHandler implements \Aurora\Http\Handler\PriorityHandlerInterface
+use Aurora\Http\Handler\HandlerInterface;
+use Aurora\Http\Handler\PriorityInterface;
+
+class PriorityHandler implements HandlerInterface, PriorityInterface
 {
     public $number;
 
@@ -11,7 +14,7 @@ class PriorityHandler implements \Aurora\Http\Handler\PriorityHandlerInterface
         $this->number = $number;
     }
 
-    public function handle($request, \Aurora\Http\Handler\HandlerInterface $next)
+    public function handle($request, HandlerInterface $next)
     {
         return $next->handle($request . $this->number, $next);
     }

@@ -4,13 +4,13 @@ namespace Aurora\Http\Handler\Bundle;
 
 use Aurora\Http\Handler\Bundle;
 use Aurora\Http\Handler\HandlerInterface;
-use Aurora\Http\Handler\PriorityHandlerInterface;
+use Aurora\Http\Handler\PriorityInterface;
 use SplPriorityQueue;
 
 class PriorityBundle extends Bundle
 {
     /**
-     * @var PriorityHandlerInterface[]|SplPriorityQueue
+     * @var HandlerInterface[]|SplPriorityQueue
      */
     protected $store;
     /**
@@ -26,7 +26,7 @@ class PriorityBundle extends Bundle
     /**
      * @param mixed            $request
      * @param HandlerInterface $next
-     * @return PriorityHandlerInterface|mixed
+     * @return HandlerInterface|mixed
      */
     public function handle($request, HandlerInterface $next)
     {
@@ -36,8 +36,9 @@ class PriorityBundle extends Bundle
         if ($this->shadow == false) {
             $bundle = clone $this;
             $bundle->shadow = true;
-            if ($next instanceof PriorityHandlerInterface) {
+            if ($next instanceof PriorityInterface) {
                 $bundle->insert($next);;
+
                 return $bundle->extract()->handle($request, $bundle);
             }
 
@@ -49,7 +50,7 @@ class PriorityBundle extends Bundle
     }
 
     /**
-     * @return PriorityHandlerInterface
+     * @return HandlerInterface
      */
     public function extract()
     {
@@ -57,15 +58,19 @@ class PriorityBundle extends Bundle
     }
 
     /**
-     * @param PriorityHandlerInterface $value
+     * @param HandlerInterface $value
+     * @param int              $priority
      */
-    public function insert(PriorityHandlerInterface $value)
+    public function insert(HandlerInterface $value, $priority = null)
     {
-        $this->store->insert($value, $value->getPriority());
+        if ($priority === null && $value instanceof PriorityInterface) {
+            $priority = $value->getPriority();
+        }
+        $this->store->insert($value, $priority);
     }
 
     /**
-     * @return PriorityHandlerInterface
+     * @return HandlerInterface
      */
     public function top()
     {

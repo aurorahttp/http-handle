@@ -2,7 +2,7 @@
 
 namespace Aurora\Http\Handler;
 
-interface PriorityHandlerInterface extends HandlerInterface
+interface PriorityInterface
 {
     /**
      * @return int
