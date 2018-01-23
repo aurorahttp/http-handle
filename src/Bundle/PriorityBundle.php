@@ -36,13 +36,9 @@ class PriorityBundle extends Bundle
         if ($this->shadow == false) {
             $bundle = clone $this;
             $bundle->shadow = true;
-            if ($next instanceof PriorityInterface) {
-                $bundle->insert($next);;
+            $bundle->insert($next);;
 
-                return $bundle->extract()->handle($request, $bundle);
-            }
-
-            return $next->handle($request, $bundle);
+            return $bundle->extract()->handle($request, $bundle);
         }
         $handler = $this->extract();
 

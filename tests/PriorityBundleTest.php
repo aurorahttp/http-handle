@@ -32,7 +32,7 @@ class PriorityBundleTest extends TestCase
         foreach ([12, 5, 7, 19, 3] as $priority) {
             $bundle->insert(new PriorityHandler($priority));
         }
-        $this->assertEquals('x111912753', $bundle->handle('x', new Handler(11)));
+        $this->assertEquals('x191275311', $bundle->handle('x', new Handler(11)));
         $this->assertEquals('y191211753', $bundle->handle('y', new PriorityHandler(11)));
     }
 }
