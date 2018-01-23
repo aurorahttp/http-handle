@@ -1,5 +1,7 @@
 <?php
 
+namespace Aurora\Http\Handler\Tests;
+
 use Aurora\Http\Handler\ClosureHandler;
 use PHPUnit\Framework\TestCase;
 

@@ -25,6 +25,11 @@
             "Aurora\\Http\\Handler\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Aurora\\Http\\Handler\\Tests\\": "tests/"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "0.1.x-dev"

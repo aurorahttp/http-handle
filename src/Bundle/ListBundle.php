@@ -39,12 +39,12 @@ class ListBundle extends Bundle implements ArrayAccess
             SplDoublyLinkedList::IT_MODE_DELETE)) {
             $bundle = clone $this;
             $bundle->store->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_DELETE);
+
             return $next->handle($request, $bundle);
         }
-        $bundle = $this;
         $handler = $this->frontPop();
 
-        return $handler->handle($request, $bundle);
+        return $handler->handle($request, $this);
     }
 
     /**

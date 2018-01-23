@@ -1,26 +1,12 @@
 <?php
 
+namespace Aurora\Http\Handler\Tests;
+
 use Aurora\Http\Handler\Bundle\ListBundle;
 use PHPUnit\Framework\TestCase;
 
-class Handler implements \Aurora\Http\Handler\HandlerInterface
-{
-    public $number;
-
-    public function __construct($number = null)
-    {
-        $this->number = $number;
-    }
-
-    public function handle($request, \Aurora\Http\Handler\HandlerInterface $handler)
-    {
-        return $handler->handle($request . $this->number, $handler);
-    }
-}
-
 class HandlerBundleTest extends TestCase
 {
-
     public function testReadAndWrite()
     {
         $bundle = new ListBundle();
@@ -38,7 +24,6 @@ class HandlerBundleTest extends TestCase
         $bundle->clear();
         $this->assertTrue($bundle->isEmpty());
     }
-
 
     public function testSerialize()
     {
