@@ -1,6 +1,6 @@
 <?php
 
-use Aurora\Http\Handler\HandlerBundle;
+use Aurora\Http\Handler\Bundle\ListBundle;
 use PHPUnit\Framework\TestCase;
 
 class Handler implements \Aurora\Http\Handler\HandlerInterface
@@ -23,7 +23,7 @@ class HandlerBundleTest extends TestCase
 
     public function testReadAndWrite()
     {
-        $bundle = new HandlerBundle();
+        $bundle = new ListBundle();
         $this->assertCount(0, $bundle);
         list($o, $p, $q) = $this->insertBundle($bundle, 3);
 
@@ -42,7 +42,7 @@ class HandlerBundleTest extends TestCase
 
     public function testSerialize()
     {
-        $bundle = new HandlerBundle();
+        $bundle = new ListBundle();
         $this->insertBundle($bundle, 3);
         $serialize = $bundle->serialize();
         $bundle->clear();
@@ -53,7 +53,7 @@ class HandlerBundleTest extends TestCase
 
     public function testIterator()
     {
-        $bundle = new HandlerBundle();
+        $bundle = new ListBundle();
         $list = $this->insertBundle($bundle, 3);
         foreach ($bundle as $key => $handler) {
             $this->assertSame($list[$key], $handler);
@@ -62,7 +62,7 @@ class HandlerBundleTest extends TestCase
 
     public function testArrayAccess()
     {
-        $bundle = new HandlerBundle();
+        $bundle = new ListBundle();
         $bundle[] = $handler = new Handler();
         $this->assertSame($handler, $bundle[0]);
         $this->assertTrue(isset($bundle[0]));
@@ -72,12 +72,12 @@ class HandlerBundleTest extends TestCase
 
     public function testHandle()
     {
-        $bundle = new HandlerBundle();
+        $bundle = new ListBundle();
         $this->insertBundle($bundle, 3);
         $this->assertEquals('x.012', $bundle->handle('x', new Handler('.')));
     }
 
-    protected function insertBundle(HandlerBundle $bundle, $count)
+    protected function insertBundle(ListBundle $bundle, $count)
     {
         $list = [];
         for ($i = 0; $i < $count; ++$i) {

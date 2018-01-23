@@ -1,12 +1,11 @@
 <?php
 
-namespace Aurora\Http\Handler;
+namespace Aurora\Http\Handler\Bundle;
 
 use ArrayAccess;
-use Countable;
+use Aurora\Http\Handler\Bundle;
+use Aurora\Http\Handler\HandlerInterface;
 use InvalidArgumentException;
-use Iterator;
-use Serializable;
 use SplDoublyLinkedList;
 
 /**
@@ -14,13 +13,8 @@ use SplDoublyLinkedList;
  *
  * @author Panlatent <panlatent@gmail.com>
  */
-class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, HandlerInterface
+class ListBundle extends Bundle implements ArrayAccess
 {
-    /**
-     * @var HandlerInterface[]|SplDoublyLinkedList
-     */
-    protected $store;
-
     /**
      * HandlerList constructor.
      */
@@ -111,14 +105,6 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     }
 
     /**
-     * @return int
-     */
-    public function count()
-    {
-        return $this->store->count();
-    }
-
-    /**
      * @return bool
      */
     public function isEmpty()
@@ -158,9 +144,9 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     }
 
     /**
-     * @param HandlerBundle $handlerList
+     * @param ListBundle $handlerList
      */
-    public function merge(HandlerBundle $handlerList)
+    public function merge(ListBundle $handlerList)
     {
         foreach ($handlerList as $handler) {
             $this->store->push($handler);
@@ -207,37 +193,6 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
         $this->store->offsetUnset($index);
     }
 
-    /**
-     * Rewind store
-     */
-    public function rewind()
-    {
-        $this->store->rewind();
-    }
-
-    /**
-     * @return HandlerInterface
-     */
-    public function current()
-    {
-        return $this->store->current();
-    }
-
-    /**
-     * @return int
-     */
-    public function key()
-    {
-        return $this->store->key();
-    }
-
-    /**
-     * Move forward to next element
-     */
-    public function next()
-    {
-        $this->store->next();
-    }
 
     /**
      * Move to previous entry
@@ -245,29 +200,5 @@ class HandlerBundle implements Iterator, Countable, ArrayAccess, Serializable, H
     public function prev()
     {
         $this->store->prev();
-    }
-
-    /**
-     * @return bool
-     */
-    public function valid()
-    {
-        return $this->store->valid();
-    }
-
-    /**
-     * @return string
-     */
-    public function serialize()
-    {
-        return serialize($this->store);
-    }
-
-    /**
-     * @param string $serialized
-     */
-    public function unserialize($serialized)
-    {
-        $this->store = unserialize($serialized);
     }
 }
