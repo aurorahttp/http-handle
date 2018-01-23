@@ -13,10 +13,6 @@ class PriorityBundle extends Bundle
      * @var HandlerInterface[]|SplPriorityQueue
      */
     protected $store;
-    /**
-     * @var bool
-     */
-    protected $shadow = false;
 
     public function __construct()
     {

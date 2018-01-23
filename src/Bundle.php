@@ -11,6 +11,10 @@ abstract class Bundle implements BundleInterface
      * @var HandlerInterface[]|Iterator|Countable
      */
     protected $store;
+    /**
+     * @var bool
+     */
+    protected $shadow = false;
 
     /**
      * @return int
@@ -57,6 +61,14 @@ abstract class Bundle implements BundleInterface
     public function valid()
     {
         return $this->store->valid();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShadow()
+    {
+        return $this->shadow;
     }
 
     /**

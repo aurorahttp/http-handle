@@ -12,4 +12,9 @@ interface BundleInterface extends HandlerInterface, Iterator, Countable, Seriali
      * @return bool
      */
     public function isEmpty();
+
+    /**
+     * @return bool
+     */
+    public function isShadow();
 }

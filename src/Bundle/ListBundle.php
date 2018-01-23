@@ -35,10 +35,10 @@ class ListBundle extends Bundle implements ArrayAccess
         if ($this->isEmpty()) {
             return $request;
         }
-        if ($this->store->getIteratorMode() != (SplDoublyLinkedList::IT_MODE_FIFO |
-            SplDoublyLinkedList::IT_MODE_DELETE)) {
+        if ($this->shadow == false) {
             $bundle = clone $this;
             $bundle->store->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_DELETE);
+            $this->shadow = true;
 
             return $next->handle($request, $bundle);
         }
