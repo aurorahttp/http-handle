@@ -74,4 +74,12 @@ abstract class Bundle implements BundleInterface
     {
         $this->store = unserialize($serialized);
     }
+
+    /**
+     * Copy a new store.
+     */
+    public function __clone()
+    {
+        $this->store = clone $this->store;
+    }
 }
