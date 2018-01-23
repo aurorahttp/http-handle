@@ -1,6 +1,6 @@
 {
-    "name": "aurora/http-handle",
-    "description": "Http handle interfaces",
+    "name": "aurora/http-handler",
+    "description": "Http handler interfaces",
     "type": "library",
     "require": {
         "php": ">=7.0",
@@ -22,7 +22,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Aurora\\Http\\Handle\\": "src/"
+            "Aurora\\Http\\Handler\\": "src/"
         }
     },
     "extra": {

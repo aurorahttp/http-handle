@@ -9,7 +9,7 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false">
-    <testsuite name="Http Handle Test Suite">
+    <testsuite name="Http Handler Test Suite">
         <directory>./tests/</directory>
     </testsuite>
     <filter>

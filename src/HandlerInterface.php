@@ -1,6 +1,6 @@
 <?php
 
-namespace Aurora\Http\Handle;
+namespace Aurora\Http\Handler;
 
 interface HandlerInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-use Aurora\Http\Handle\HandlerBundle;
+use Aurora\Http\Handler\HandlerBundle;
 use PHPUnit\Framework\TestCase;
 
-class Handler implements \Aurora\Http\Handle\HandlerInterface
+class Handler implements \Aurora\Http\Handler\HandlerInterface
 {
     public $number;
 
@@ -12,7 +12,7 @@ class Handler implements \Aurora\Http\Handle\HandlerInterface
         $this->number = $number;
     }
 
-    public function handle($request, \Aurora\Http\Handle\HandlerInterface $handler)
+    public function handle($request, \Aurora\Http\Handler\HandlerInterface $handler)
     {
         return $handler->handle($request . $this->number, $handler);
     }
